@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import MegaSena from './MegaSena'
+import MegaSena from './components/MegaSena'
 
 export default class Mega extends Component {
 

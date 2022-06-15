@@ -1,6 +1,8 @@
 import { Component } from 'react'
-import { StyleSheet, View, Text, TextInput } from 'react-native'
-import { Button } from 'react-native-web'
+import { StyleSheet, View, Text, TextInput, Button } from 'react-native'
+
+import NumberBall from './numberBall'
+
 export default class MegaSena extends Component {
 
   // constructor(props) {
@@ -50,12 +52,20 @@ export default class MegaSena extends Component {
     return nums.includes(new_number) ? this.genNewNumber(nums) : new_number
   }
 
+  showNumberBalls = () => {
+    let numbers = this.state.numbers_generated
+
+    return numbers.map(number => <NumberBall key={number} number={number}/>)
+  }
+
   render() {
     return (
       <>
         <View style={styles.container}>
-          <Text>Mega Sena</Text>
-          <Text>Numbers quantity: {this.state.number_quantity}</Text>
+          <Text style={styles.title}>Mega Sena</Text>
+          <Text style={styles.subTitle}>
+            Numbers quantity: <Text style={styles.subTitleNumber}>{this.state.number_quantity}</Text>
+          </Text>
           <TextInput 
             keyboardType='numeric'
             style={styles.input}
@@ -68,7 +78,9 @@ export default class MegaSena extends Component {
             title='Bet'
             onPress={this.genNumbers}
           />
-          <Text>{this.state.numbers_generated.join(',')}</Text>
+          <View style={styles.ballsContainer}>
+            {this.showNumberBalls()}
+          </View>
         </View>
       </>
     )
@@ -78,19 +90,42 @@ export default class MegaSena extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#111',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20
+    padding: 20,
+    width: '100%'
+  },
+  title: {
+    color: '#eee',
+    fontSize: 25,
+    fontWeight: 'bold'
+  },
+  subTitle: {
+    color: '#eee',
+    fontSize: 18
+  },
+  subTitleNumber: {
+    color: '#0394fc',
+    fontWeight: 'bold'
   },
   input: {
     width: '100%',
     padding: 15,
     height: 40,
-    backgroundColor: '#222',
+    backgroundColor: '#333',
     color: '#ccc',
     borderBottomWidth: 3,
-    borderBottomColor: '#3e2',
+    borderBottomColor: '#0394fc',
     marginVertical: 20
+  },
+  ballsContainer: {
+    flexDirection: 'row',
+    width: '90%',
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    marginTop: 20
   }
 })
