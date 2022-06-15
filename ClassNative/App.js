@@ -7,7 +7,7 @@ export default class Mega extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MegaSena numbersQtd={7}/>
+        <MegaSena numbersQtd={12}/>
       </View>
     )
   }
