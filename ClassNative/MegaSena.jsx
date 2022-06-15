@@ -16,7 +16,7 @@ export default class MegaSena extends Component {
     number_quantity: this.props.numbersQtd
   }
 
-  changeNumberQuantity(qtd) {
+  changeNumberQuantity = (qtd) => {
     this.setState({ number_quantity: qtd })
   }
 
@@ -31,7 +31,7 @@ export default class MegaSena extends Component {
             style={styles.input}
             placeholder='Enter a number quantity'
             value={this.state.number_quantity}
-            onChangeText={(qtd) => this.changeNumberQuantity(qtd)}
+            onChangeText={this.changeNumberQuantity}
             placeholderTextColor='#ccc'
           />
         </View>
