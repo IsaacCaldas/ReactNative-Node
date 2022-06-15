@@ -22,6 +22,7 @@ export default class MegaSena extends Component {
     this.setState({ number_quantity: +qtd })
   }
 
+  // functional
   genNumbers = () => {
     let numbers = Array(this.state.number_quantity).fill()
       .reduce(n => [...n, this.genNewNumber(n)], [])
@@ -29,6 +30,20 @@ export default class MegaSena extends Component {
 
     this.setState({ numbers_generated: numbers })
   }
+
+  // procedural
+  // genNumbers = () => {
+  //   const { number_quantity } = this.state
+  //   const numbers = []
+
+  //   for(let i = 0; i < number_quantity; i++) {
+  //     const number = this.genNewNumber(numbers)
+  //     numbers.push(number)
+  //   }
+
+  //   numbers.sort((a, b) => a - b)
+  //   this.setState({ numbers_generated: numbers })
+  // }
 
   genNewNumber = (nums) => {
     const new_number = Math.floor(Math.random() * 60) + 1
