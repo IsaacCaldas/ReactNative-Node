@@ -17,8 +17,6 @@ export default function Calculator() {
   }, [operation])
 
   function addDigit(digit){
-    operation ? setCurrent(1) : setCurrent(0)
-
     if (display_label == '0') {
       if (digit == '0') return
 
@@ -49,7 +47,10 @@ export default function Calculator() {
   }
 
   function setOperation(operator){
-    setOperator(operator)
+    if(current === 0) {
+      setOperator(operator)
+      setCurrent(1)
+    }
   }
 
   return(
