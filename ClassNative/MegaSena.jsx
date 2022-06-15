@@ -2,19 +2,19 @@ import { Component } from 'react'
 import { StyleSheet, View, Text, TextInput } from 'react-native'
 export default class MegaSena extends Component {
 
-  constructor(props) {
-    super(props)
+  // constructor(props) {
+  //   super(props)
 
-    this.state = {
-      number_quantity: props.numbersQtd
-    }
+  //   this.state = {
+  //     number_quantity: props.numbersQtd
+  //   }
 
-    this.changeNumberQuantity = this.changeNumberQuantity.bind(this)
-  }
-
-  // state = {
-  //   number_quantity: this.props.numbersQtd
+  //   this.changeNumberQuantity = this.changeNumberQuantity.bind(this)
   // }
+
+  state = {
+    number_quantity: this.props.numbersQtd
+  }
 
   changeNumberQuantity(qtd) {
     this.setState({ number_quantity: qtd })
@@ -31,7 +31,7 @@ export default class MegaSena extends Component {
             style={styles.input}
             placeholder='Enter a number quantity'
             value={this.state.number_quantity}
-            onChangeText={this.changeNumberQuantity}
+            onChangeText={(qtd) => this.changeNumberQuantity(qtd)}
             placeholderTextColor='#ccc'
           />
         </View>
