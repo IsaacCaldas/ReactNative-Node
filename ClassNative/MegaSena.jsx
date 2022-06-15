@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { StyleSheet, View, Text, TextInput } from 'react-native'
+import { Button } from 'react-native-web'
 export default class MegaSena extends Component {
 
   // constructor(props) {
@@ -13,11 +14,25 @@ export default class MegaSena extends Component {
   // }
 
   state = {
-    number_quantity: this.props.numbersQtd
+    number_quantity: this.props.numbersQtd,
+    numbers_generated: []
   }
 
   changeNumberQuantity = (qtd) => {
-    this.setState({ number_quantity: qtd })
+    this.setState({ number_quantity: +qtd })
+  }
+
+  genNumbers = () => {
+    let numbers = Array(this.state.number_quantity).fill()
+      .reduce(n => [...n, this.genNewNumber(n)], [])
+      .sort((a, b) => a - b)
+
+    this.setState({ numbers_generated: numbers })
+  }
+
+  genNewNumber = (nums) => {
+    const new_number = Math.floor(Math.random() * 60) + 1
+    return nums.includes(new_number) ? this.genNewNumber(nums) : new_number
   }
 
   render() {
@@ -34,6 +49,11 @@ export default class MegaSena extends Component {
             onChangeText={this.changeNumberQuantity}
             placeholderTextColor='#ccc'
           />
+          <Button 
+            title='Bet'
+            onPress={this.genNumbers}
+          />
+          <Text>{this.state.numbers_generated.join(',')}</Text>
         </View>
       </>
     )
@@ -56,6 +76,6 @@ const styles = StyleSheet.create({
     color: '#ccc',
     borderBottomWidth: 3,
     borderBottomColor: '#3e2',
-    marginTop: 20
+    marginVertical: 20
   }
 })
