@@ -6,35 +6,50 @@ import Button from '../components/Button'
 
 export default function Calculator() {
 
-  const [display_label, setDisplayLabel] = useState(['0'])
-  const [first_number, setFirstNumber] = useState(0)
-  const [second_number, setSecondNumber] = useState(0)
+  const [display_label, setDisplayLabel] = useState('0')
+  const [numbers, setNumbers] = useState([0 ,0])
+  const [current, setCurrent] = useState(0)
   const [operation, setOperator] = useState()
-  console.log(display_label)
+  console.log(numbers)
 
-  // useEffect(() => {
-
-  // }, [operation])
+  useEffect(() => {
+    setDisplayLabel('0')
+  }, [operation])
 
   function addDigit(digit){
-    // if (display_label[0] == '0' && digit !== ',' && !display_label.includes(',')) {
-    //   setDisplayLabel([])
-    // }
-    // if (digit == ',' && display_label.includes(',')) return 
+    operation ? setCurrent(1) : setCurrent(0)
 
-    // setDisplayLabel(state => [...state, String(digit)])
+    if (display_label == '0') {
+      if (digit == '0') return
+
+      if (digit !== ',' && !display_label.includes(',')) {
+        setDisplayLabel('')
+      }
+    }
+    if (digit == ',' && display_label.includes(',')) return 
+
+    setDisplayLabel(state => state + '' + digit)
+
+    if (digit !== ',') {
+      let new_number = parseFloat(display_label)
+      let number = [...numbers] 
+      number[current] = new_number
+      setNumbers(number)
+    }
   }
 
   function clearMemory(){
     setDisplayLabel('0')
+    let number = [...numbers] 
+    number[0] = 0
+    number[1] = 0
+    setNumbers(number)
+    setCurrent(0)
+    setOperation('')
   }
 
   function setOperation(operator){
     setOperator(operator)
-  }
-
-  function solution(){
-    // let total = 
   }
 
   return(
@@ -59,7 +74,7 @@ export default function Calculator() {
         <Button label='+' bgColor='#f6971a' onClick={setOperation}/>
         <Button label=',' onClick={addDigit}/>
         <Button label='0' big onClick={addDigit}/>
-        <Button label='=' bgColor='#f6971a' onClick={solution}/>
+        <Button label='=' bgColor='#f6971a' onClick={setOperation}/>
       </View>
     </View>
   )
