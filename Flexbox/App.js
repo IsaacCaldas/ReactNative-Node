@@ -38,8 +38,10 @@ const styles = StyleSheet.create({
     padding: 20
   },
   box: {
-    backgroundColor: '#555',
-    flexGrow: 1,
-    justifyContent: 'space-between'
+    flex: 1,
+    width: '100%',
+    alignItems: 'flex-end',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#111'
   }
 });
