@@ -11,19 +11,19 @@ export default function App() {
 const Box = () => {
   return (
     <View style={styles.box}>
-      <Square/>
-      <Square color='#a3A'/>
-      <Square color='#ddde23'/>
-      <Square color='#a3f2ba'/>
-      <Square color='#4a33bb'/>
+      <Square side={20}/>
+      <Square color='#a3A' side={30}/>
+      <Square color='#ddde23' side={60}/>
+      <Square color='#a3f2ba' side={40}/>
+      <Square color='#4a33bb' side={10}/>
     </View>
   )
 }
 
-const Square = ({color}) => {
+const Square = ({color, side}) => {
   return (
     <View style={
-      { width: 40, height: 40, 
+      { width: side, //height: side, 
       backgroundColor: color || '#a33' }
     }/>
   )
@@ -38,10 +38,11 @@ const styles = StyleSheet.create({
     padding: 20
   },
   box: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'flex-end',
+    flexDirection: 'row-reverse',
     justifyContent: 'space-evenly',
+    alignItems: 'stretch',
+    width: '100%',
+    height: 400,
     backgroundColor: '#111'
   }
 });
