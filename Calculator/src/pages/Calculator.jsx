@@ -10,17 +10,14 @@ export default function Calculator() {
   const [values, setValues] = useState(['0','0'])
   const [current, setCurrent] = useState(0)
   const [operation, setOperator] = useState()
-
-  console.log('values', values)
-  // console.log(display_label)
-  console.log('current', current)
-  console.log('operation', operation)
-
-  useEffect(() => {
-
-  }, [operation])
+  const [percentage, setPercentage] = useState(false)
 
   function addDigit(digit){
+
+    if (display_label == 'Infinity') {
+      caseInfinity()
+      return 
+    }
 
     if (digit == '0' && display_label == '0') return
     if (digit == ',' && display_label.includes(',')) return 
@@ -42,10 +39,26 @@ export default function Calculator() {
     setCurrent(0)
     setOperation('')
   }
+console.log(values)
+  function clearEntry() {
+    let numbers = [...values]
+    let test = numbers[current]
+    test = [...test]
+    test = test.pop()
+    console.log(test)
+    setValues(numbers)
+  }
 
   function setOperation(operator){
+
+    if (display_label == 'Infinity') {
+      caseInfinity()
+      return 
+    }
+
     if(current === 0 && operator !== '=') {
       setOperator(operator)
+      operator == '%' && setPercentage(!percentage)
       setCurrent(1)
     } 
     else {
@@ -59,7 +72,26 @@ export default function Calculator() {
       numbers[1] = parseFloat(numbers[1].replace(',', '.'))
       
       try {
-        numbers[0] = eval(`${numbers[0]} ${operation} ${numbers[1]}`)
+        if (!percentage) {
+          if (operator !== '/' && numbers[1] !== '0') {
+            numbers[0] = eval(`${numbers[0]} ${operation} ${numbers[1]}`)
+          } else {
+            caseInfinity()
+            return
+          }
+        } else {
+          let total_percentage = (parseFloat(numbers[0])/ 100) * parseFloat(numbers[1])
+          console.log(total_percentage)
+
+          if (String(total_percentage).includes('.')) {
+            total_percentage = total_percentage.toFixed(1)
+            console.log(total_percentage)
+          }
+
+          numbers[0] = String(total_percentage) + '%'
+          console.log(numbers[0])
+        }
+
       } catch (error) {
         numbers[0] = '0'
       }
@@ -68,18 +100,27 @@ export default function Calculator() {
       numbers[0] = numbers[0].toString().replace('.', ',')
 
       setDisplayLabel(numbers[0])
-      setOperator(operator || null)
+      setOperator(operator || '')
       setCurrent(operator == '=' ? 0 : 1)
       setValues(operator == '=' ? ['0','0'] : numbers)
+      setPercentage(percentage && !percentage)
     }
   }
+
+  function caseInfinity() {
+    setCurrent(0)
+    setValues(['0','0'])
+    setOperator(null)
+    setDisplayLabel('0')
+  }
+
   return(
     <View style={styles.calculator}> 
       <Display display_label={display_label}/>
       <View style={styles.buttonsArea}>
 
         <Button label='AC' bgColor='#aaa' color='#333' onClick={clearMemory}/>
-        <Button label='+/-' bgColor='#aaa'/>
+        <Button label='CE' bgColor='#aaa' color='#333' onClick={clearEntry}/>
         <Button label='%' bgColor='#aaa' color='#333' onClick={setOperation}/>
         <Button label='/' bgColor='#f6971a' onClick={setOperation}/>
         <Button label='7' onClick={addDigit}/>
