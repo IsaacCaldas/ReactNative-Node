@@ -7,56 +7,77 @@ import Button from '../components/Button'
 export default function Calculator() {
 
   const [display_label, setDisplayLabel] = useState('0')
-  const [numbers, setNumbers] = useState([0 ,0])
+  const [values, setValues] = useState(['0','0'])
   const [current, setCurrent] = useState(0)
   const [operation, setOperator] = useState()
-  console.log(numbers)
+
+  console.log('values', values)
+  // console.log(display_label)
+  console.log('current', current)
+  console.log('operation', operation)
 
   useEffect(() => {
-    setDisplayLabel('0')
+
   }, [operation])
 
   function addDigit(digit){
-    if (display_label == '0') {
-      if (digit == '0') return
 
-      if (digit !== ',' && !display_label.includes(',')) {
-        setDisplayLabel('')
-      }
-    }
+    if (digit == '0' && display_label == '0') return
     if (digit == ',' && display_label.includes(',')) return 
 
-    setDisplayLabel(state => state + '' + digit)
+    let numbers = [...values]
 
-    if (digit !== ',') {
-      let new_number = parseFloat(display_label)
-      let number = [...numbers] 
-      number[current] = new_number
-      setNumbers(number)
+    if(numbers[current] == '0' && digit !== ',') {
+      numbers[current] = ''
     }
+    numbers[current] += digit
+    
+    setValues(numbers)
+    setDisplayLabel(numbers[current])
   }
 
   function clearMemory(){
     setDisplayLabel('0')
-    let number = [...numbers] 
-    number[0] = 0
-    number[1] = 0
-    setNumbers(number)
+    setValues(['0','0'])
     setCurrent(0)
     setOperation('')
   }
 
   function setOperation(operator){
-    if(current === 0) {
+    if(current === 0 && operator !== '=') {
       setOperator(operator)
       setCurrent(1)
+    } 
+    else {
+      let numbers = [...values]
+
+      if (numbers[1] == '0') {
+        numbers[1] = numbers[0]
+      }
+ 
+      numbers[0] = parseFloat(numbers[0].replace(',', '.'))
+      numbers[1] = parseFloat(numbers[1].replace(',', '.'))
+      
+      try {
+        numbers[0] = eval(`${numbers[0]} ${operation} ${numbers[1]}`)
+      } catch (error) {
+        numbers[0] = '0'
+      }
+
+      numbers[1] = '0'
+      numbers[0] = numbers[0].toString().replace('.', ',')
+
+      setDisplayLabel(numbers[0])
+      setOperator(operator || null)
+      setCurrent(operator == '=' ? 0 : 1)
+      setValues(operator == '=' ? ['0','0'] : numbers)
     }
   }
-
   return(
     <View style={styles.calculator}> 
       <Display display_label={display_label}/>
       <View style={styles.buttonsArea}>
+
         <Button label='AC' bgColor='#aaa' color='#333' onClick={clearMemory}/>
         <Button label='+/-' bgColor='#aaa'/>
         <Button label='%' bgColor='#aaa' color='#333' onClick={setOperation}/>
@@ -97,4 +118,4 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     padding: 10
   }
-});
+})
