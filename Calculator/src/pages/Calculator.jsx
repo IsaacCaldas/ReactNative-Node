@@ -12,6 +12,16 @@ export default function Calculator() {
   const [operation, setOperator] = useState()
   const [percentage, setPercentage] = useState(false)
 
+  useEffect(() => {
+    if (current == 1 && !operation) {
+      setDisplayLabel(values[0])
+    } else {
+      setDisplayLabel(values[current])
+    }
+  }, [values])
+
+  console.log(values)
+
   function addDigit(digit){
 
     if (display_label == 'Infinity') {
@@ -29,23 +39,6 @@ export default function Calculator() {
     }
     numbers[current] += digit
     
-    setValues(numbers)
-    setDisplayLabel(numbers[current])
-  }
-
-  function clearMemory(){
-    setDisplayLabel('0')
-    setValues(['0','0'])
-    setCurrent(0)
-    setOperation('')
-  }
-console.log(values)
-  function clearEntry() {
-    let numbers = [...values]
-    let test = numbers[current]
-    test = [...test]
-    test = test.pop()
-    console.log(test)
     setValues(numbers)
   }
 
@@ -98,20 +91,31 @@ console.log(values)
 
       numbers[1] = '0'
       numbers[0] = numbers[0].toString().replace('.', ',')
-
-      setDisplayLabel(numbers[0])
       setOperator(operator || '')
       setCurrent(operator == '=' ? 0 : 1)
-      setValues(operator == '=' ? ['0','0'] : numbers)
+      setValues(numbers)
       setPercentage(percentage && !percentage)
     }
+  }
+
+  function clearMemory(){
+    setOperator(null)
+    setCurrent(0)
+    setValues(['0','0'])
+  }
+
+  function clearEntry() {
+    let numbers = [...values]
+    let number_to_remove = [...numbers[current]]
+    number_to_remove.pop()
+    numbers[current] = number_to_remove.join('') || '0'
+    setValues(numbers)
   }
 
   function caseInfinity() {
     setCurrent(0)
     setValues(['0','0'])
     setOperator(null)
-    setDisplayLabel('0')
   }
 
   return(
