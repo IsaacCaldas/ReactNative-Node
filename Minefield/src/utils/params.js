@@ -9,5 +9,10 @@ const params = {
   getColumnsAmount() {
     const width = Dimensions.get('Window').width
     return Math.floor(width / this.blockSize)
+  },
+  getRowsAmount() {
+    const totalHeight = Dimensions.get('Window').height
+    const boardHeight = totalHeight * (1 - this.headerRatio)
+    return Math.floor(boardHeight / this.blockSize)
   }
 }
