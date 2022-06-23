@@ -16,7 +16,7 @@ const createBoard = (rows, cols) => {
 
 const spreadMines = (board, mines_amount) => {
   const rows = board.length
-  const cols = board[0].lenght
+  const cols = board[0].length
   let mines_planted = 0
 
   while (mines_planted < mines_amount) {

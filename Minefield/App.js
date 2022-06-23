@@ -13,7 +13,7 @@ export default function App() {
   const [cols, setCols] = useState(params.getColumnsAmount())
 
   const [mines_amount, setMinesAmount] = useState(Math.ceil(cols * rows * params.difficultLevel))
-  // const [board, setBoard] = useState(createMinedBoard(rows, cols, mines_amount))
+  const [board, setBoard] = useState(createMinedBoard(rows, cols, mines_amount))
   
   return (
     <SafeAreaView style={styles.container}>
@@ -22,7 +22,7 @@ export default function App() {
         Grid size: {params.getRowsAmount()}x{params.getColumnsAmount()} 
       </Text> 
       <View style={styles.board}>
-        {/* <MineField board={board}/> */}
+        <MineField board={board}/>
       </View>
     </SafeAreaView>
   );
@@ -50,6 +50,6 @@ const styles = StyleSheet.create({
   },
   board: {
     alignItems: 'center',
-    backgroundColor: '#eee'
+    backgroundColor: '#222'
   }
 });

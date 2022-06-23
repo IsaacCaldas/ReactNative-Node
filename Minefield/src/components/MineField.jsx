@@ -7,7 +7,7 @@ export default function MineField({board}) {
     const cols = row.map((field, col_id) => {
       return <Field key={col_id} {...field}/>
     })
-    return <View key={row_id}>{cols}</View>
+    return <View style={{ flexDirection: 'row' }} key={row_id}>{cols}</View>
   })
 
   return <View style={styles.container}>{rows}</View>
@@ -15,7 +15,6 @@ export default function MineField({board}) {
 
 const styles = StyleSheet.create({
   constainer: {
-    flexDirection: 'row',
     backgroundColor: '#ded'
   }
 })
