@@ -1,13 +1,16 @@
 import { StyleSheet, View, Text } from 'react-native'
 import params from '../utils/params'
 
+import Mine from './Mine'
+
 const Field = (status) => {
-  const { mined, opened, nearMines } = status
+  const { mined, opened, nearMines, blowned } = status
 
   const styleField = [styles.field]
   // others styles
 
   if (opened) styleField.push(styles.opened)
+  if (blowned) styleField.push(styles.blowned)
   if (styleField.length === 1) styleField.push(styles.regular)
 
   let color = null
@@ -28,16 +31,16 @@ const Field = (status) => {
       break
     default: 
       color = '#164e99'
-  }
+  } 
 
   return (
     <View style={styleField}>
-      {!mined && opened && nearMines > 0 ? 
+      {!mined && opened && nearMines > 0 &&  
           <Text style={[styles.label, { color: color }]}>
             {nearMines}
           </Text>
-        : false
       }
+      { mined && opened && <Mine/>}
     </View>
   )
 }
@@ -68,7 +71,15 @@ const styles = StyleSheet.create({
     borderLeftColor: '#4a5166',
     borderBottomColor: '#6b738c',
     borderRightColor: '#6b738c',   
+       
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  blowned: {
+    backgroundColor: '#ad5636',
+    borderTopColor: '#8f472c',
+    borderLeftColor: '#8f472c',
+    borderBottomColor: '#96472a',
+    borderRightColor: '#96472a'
   }
 })

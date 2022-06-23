@@ -13,10 +13,12 @@ export default function App() {
       <Field />
       <Field opened nearMines={1} />
       <Field opened nearMines={2}/>
+      <Field mined opened blowned />
       <Field />
       <Field opened nearMines={3}/>
-      <Field />
+      <Field mined />
       <Field opened nearMines={4}/>
+      <Field mined opened />
       <Field opened nearMines={6}/>
     </SafeAreaView>
   );
