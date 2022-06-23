@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import params from '../utils/params'
 
-const Mine = (status) => {
+const Mine = () => {
   return (
     <View style={styles.mine}>
       <View style={styles.coreMine}/>
@@ -21,17 +21,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   coreMine: {
-    backgroundColor: '#111',
-    height: 12,
-    width: 12,
+    backgroundColor: '#141414',
+    height: 11,
+    width: 11,
     borderRadius: 8,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex: 2
   },
   line: {
     backgroundColor: '#111',
     height: 3,
-    width: 17,
+    width: 16,
     position: 'absolute'
   }
 })

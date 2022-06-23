@@ -2,16 +2,18 @@ import { StyleSheet, View, Text } from 'react-native'
 import params from '../utils/params'
 
 import Mine from './Mine'
+import Flag from './Flag'
 
 const Field = (status) => {
-  const { mined, opened, nearMines, blowned } = status
+  const { mined, opened, nearMines, blowned, flagged } = status
 
   const styleField = [styles.field]
   // others styles
 
   if (opened) styleField.push(styles.opened)
   if (blowned) styleField.push(styles.blowned)
-  if (styleField.length === 1) styleField.push(styles.regular)
+  if (flagged) styleField.push(styles.flagged)
+  if (!opened) styleField.push(styles.regular)
 
   let color = null
 
@@ -41,6 +43,7 @@ const Field = (status) => {
           </Text>
       }
       { mined && opened && <Mine/>}
+      { flagged && !opened && <Flag/> }
     </View>
   )
 }
@@ -81,5 +84,8 @@ const styles = StyleSheet.create({
     borderLeftColor: '#8f472c',
     borderBottomColor: '#96472a',
     borderRightColor: '#96472a'
+  },
+  flagged: {
+
   }
 })

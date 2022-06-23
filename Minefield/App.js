@@ -15,6 +15,8 @@ export default function App() {
       <Field opened nearMines={2}/>
       <Field mined opened blowned />
       <Field />
+      <Field flagged />
+      <Field />
       <Field opened nearMines={3}/>
       <Field mined />
       <Field opened nearMines={4}/>
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
   },
   titleSub: {
     fontSize: 30,
-    color: "#a32a22"
+    color: "#f2480a"
   },
   gridSize: {
     fontSize: 20,
