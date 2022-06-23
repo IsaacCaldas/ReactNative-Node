@@ -8,10 +8,10 @@ const Flag = ({bigger}) => {
   const flag_right_margin_top = useRef(new Animated.Value(1)).current
 
   const flag_left_margin_left = useRef(new Animated.Value(2)).current
-  const flag_right_margin_left = useRef(new Animated.Value(6)).current
+  const flag_right_margin_left = useRef(new Animated.Value(bigger ? 8 : 6)).current
   // width
-  const flag_left_width = useRef(new Animated.Value(5)).current
-  const flag_right_width = useRef(new Animated.Value(3)).current
+  const flag_left_width = useRef(new Animated.Value(bigger ? 14 : 5)).current
+  const flag_right_width = useRef(new Animated.Value(bigger ? 8 : 3)).current
   // zIndex
   const flag_left_index = useRef(new Animated.Value(2)).current
   // color 
@@ -25,7 +25,6 @@ const Flag = ({bigger}) => {
     inputRange: [0, 1],
     outputRange: ['#f2480a', '#e34309']
   })
-
   useEffect(() => {
     flagAnimation()
   },[])
@@ -35,7 +34,7 @@ const Flag = ({bigger}) => {
       Animated.sequence([
         Animated.parallel([
           Animated.timing(flag_left_width, {
-            toValue: 4,
+            toValue: bigger ? 10 : 4,
             duration: 1000
           }),  
           Animated.timing(flag_left_margin_top, {
@@ -66,7 +65,7 @@ const Flag = ({bigger}) => {
 
         Animated.parallel([
           Animated.timing(flag_left_width, {
-            toValue: 5,
+            toValue: bigger ? 14 : 5,
             duration: 1000
           }),  
           Animated.timing(flag_left_margin_top, {
@@ -103,22 +102,22 @@ const Flag = ({bigger}) => {
       <View style={[styles.flagPole, bigger && styles.flagPoleBigger]}/>
       <Animated.View style={[
         styles.leftFlag, 
-        bigger && styles.flag1Bigger, 
         {
           marginTop: flag_left_margin_top,
           marginLeft: flag_left_margin_left,
           backgroundColor: flagLeftColor,
-          width: flag_left_width
+          width: flag_left_width,
+          height: bigger ? 10 : 5
         }
       ]}/>
       <Animated.View style={[
         styles.rightFlag, 
-        bigger && styles.flag2Bigger,
         {
           marginTop: flag_right_margin_top,
           marginLeft: flag_right_margin_left,
           backgroundColor: flagRightColor,
-          width: flag_right_width
+          width: flag_right_width,
+          height: bigger ? 10 : 5
         }
       ]}/>
       <View style={[styles.base1, bigger && styles.base1Bigger]}/>
@@ -135,12 +134,10 @@ const styles = StyleSheet.create({
     marginLeft: 1,
   },
   leftFlag: {
-    position: 'absolute',
-    height: 5
+    position: 'absolute'
   },
   rightFlag: {
-    position: 'absolute',
-    height: 5
+    position: 'absolute'
   },
   flagPole: {
     backgroundColor: '#3b2308',
@@ -176,10 +173,17 @@ const styles = StyleSheet.create({
     width: 4,
     marginLeft: 16
   },
-  flagBigger: {
+  leftflagBigger: {
     height: 10,
     width: 14,
-    marginLeft: 3
+    marginLeft: 3,
+    backgroundColor: '#e34309'
+  },
+  rightflagBigger: {
+    height: 10,
+    width: 14,
+    marginLeft: 3,
+    backgroundColor: '#f2480a'
   },
   base1Bigger: {
     height: 4,

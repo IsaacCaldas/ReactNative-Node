@@ -7,7 +7,6 @@ import Flag from './src/components/Flag';
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <Flag bigger />
       <Text style={styles.title}>mine<Text style={styles.titleSub}>Field</Text></Text> 
       <Text style={styles.gridSize}>
         Grid size: {params.getRowsAmount()}x{params.getColumnsAmount()} 
