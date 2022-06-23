@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import params from './src/utils/params'
 
+import Field from './src/components/Field';
+
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
@@ -8,6 +10,7 @@ export default function App() {
       <Text style={styles.gridSize}>
         Grid size: {params.getRowsAmount()}x{params.getColumnsAmount()} 
       </Text> 
+      <Field />
     </SafeAreaView>
   );
 }
@@ -15,7 +18,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#111',
+    backgroundColor: '#0f0f0f',
     alignItems: 'center',
     justifyContent: 'center',
   },
