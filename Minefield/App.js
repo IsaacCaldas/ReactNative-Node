@@ -1,28 +1,29 @@
+import { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import params from './src/utils/params'
 
-import Field from './src/components/Field';
 import Flag from './src/components/Flag';
 
+import MineField from './src/components/MineField'
+import { createMinedBoard } from './src/utils/mineField_logic';
+
 export default function App() {
+
+  const [rows, setRows] = useState(params.getRowsAmount())
+  const [cols, setCols] = useState(params.getColumnsAmount())
+
+  const [mines_amount, setMinesAmount] = useState(Math.ceil(cols * rows * params.difficultLevel))
+  // const [board, setBoard] = useState(createMinedBoard(rows, cols, mines_amount))
+  
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>mine<Text style={styles.titleSub}>Field</Text></Text> 
       <Text style={styles.gridSize}>
         Grid size: {params.getRowsAmount()}x{params.getColumnsAmount()} 
       </Text> 
-      <Field />
-      <Field opened nearMines={1} />
-      <Field opened nearMines={2}/>
-      <Field mined opened blowned />
-      <Field />
-      <Field flagged />
-      <Field />
-      <Field opened nearMines={3}/>
-      <Field mined />
-      <Field opened nearMines={4}/>
-      <Field mined opened />
-      <Field opened nearMines={6}/>
+      <View style={styles.board}>
+        {/* <MineField board={board}/> */}
+      </View>
     </SafeAreaView>
   );
 }
@@ -31,8 +32,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0f0f0f',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
   title: {
     fontSize: 38,
@@ -47,5 +47,9 @@ const styles = StyleSheet.create({
   gridSize: {
     fontSize: 20,
     color: "#ebebeb"
+  },
+  board: {
+    alignItems: 'center',
+    backgroundColor: '#eee'
   }
 });
