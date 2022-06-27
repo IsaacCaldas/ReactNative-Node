@@ -1,28 +1,42 @@
 import { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, SafeAreaView, Alert } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Alert } from 'react-native'
 import params from './src/utils/params'
 
-import Flag from './src/components/Flag';
-
 import MineField from './src/components/MineField'
+import Header from './src/components/Header'
+import LevelSelection from './src/pages/LevelSelection'
+
 import { 
-  createMinedBoard, cloneBoard, openField, 
-  fieldBlowned, wonGame, showMines, invertFlag } from './src/utils/mineField_logic';
+  createMinedBoard, cloneBoard, openField, fieldBlowned, 
+  wonGame, showMines, invertFlag, flagsUsed } from './src/utils/mineField_logic';
 
 export default function App() {
-
+  
   const [won_game, setWon] = useState(false)
   const [lost_game, setLost] = useState(false)
+  const [visible, setVisible] = useState(false)
 
-  const rows = params.getRowsAmount()
-  const cols = params.getColumnsAmount()
+  const [rows, setRows] = useState(params.getRowsAmount())
+  const [cols, setCols] = useState(params.getColumnsAmount())
 
-  const mines_amount = () => Math.ceil(cols * rows * params.difficultLevel)
+  const [mines_amount, setMinesAmount] = useState(Math.ceil(cols * rows * params.difficultLevel))
   const [board, setBoard] = useState()
+  
 
   useEffect(() => {
-    setBoard(createMinedBoard(rows, cols, mines_amount()))
+    setMinesAmount(mines_amount)
+    setBoard(createMinedBoard(rows, cols, mines_amount))
   }, [])
+  
+  const newGame =() => {
+    setRows(params.getRowsAmount())
+    setCols(params.getColsAmount())
+    setMinesAmount(mines_amount)
+    setBoard(createMinedBoard(rows, cols, mines_amount))
+    setNewGame(false)
+    setWon(false)
+    setLost(false)
+  }
 
   const onOpenField = (board_, row, col) => {
     const board = cloneBoard(board_)
@@ -33,10 +47,9 @@ export default function App() {
 
     if (lost) {
       showMines(board)
-      Alert.alert('You lost the game! 😞')
+      alert('You lost the game! 😞')
     } 
-
-    if(won) Alert.alert('You won the game! 😀')
+    if(won) alert('You won the game! 😀')
     
     setLost(lost)
     setWon(won)
@@ -44,25 +57,40 @@ export default function App() {
     setBoard(board)
   }
 
-  const onSelectField = (row, col) => {
-    const board = cloneBoard(board)
+  const onSelectField = (board_, row, col) => {
+    const board = cloneBoard(board_)
     invertFlag(board, row, col)
 
     const won = wonGame(board)
-    if (won) Alert.alert('You won the game! 😀')
+    if (won) alert('You won the game! 😀')
 
     setBoard(board)
     setWon(won)
   }
+
+  const levelSelected = level => {
+    params.difficultLevel = level
+  }
   
   return (
     <SafeAreaView style={styles.container}>
+      <LevelSelection visible={visible} 
+        levelSelected={levelSelected} 
+        onCancel={() => setVisible(false)}
+      />
+      {board && 
+        <Header 
+          flagsLeft={mines_amount - flagsUsed(board)}
+          onNewGame={() => newGame()}
+          showModal={() => setVisible(true)}
+        />
+      }
       <Text style={styles.title}>mine<Text style={styles.titleSub}>Field</Text></Text> 
-      <Text style={styles.gridSize}>
-        Grid size: {params.getRowsAmount()}x{params.getColumnsAmount()} 
-      </Text> 
       <View style={styles.board}>
-        {board && <MineField board={board} onOpenField={onOpenField}/>}
+        {board && <MineField board={board} 
+          onOpenField={onOpenField} 
+          onSelectField={onSelectField} />
+        }
       </View>
     </SafeAreaView>
   );

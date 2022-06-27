@@ -7,8 +7,8 @@ const Flag = ({bigger}) => {
   const flag_left_margin_top = useRef(new Animated.Value(1.2)).current
   const flag_right_margin_top = useRef(new Animated.Value(1)).current
 
-  const flag_left_margin_left = useRef(new Animated.Value(2)).current
-  const flag_right_margin_left = useRef(new Animated.Value(bigger ? 8 : 6)).current
+  const flag_left_margin_left = useRef(new Animated.Value(3)).current
+  const flag_right_margin_left = useRef(new Animated.Value(bigger ? 9 : 7)).current
   // width
   const flag_left_width = useRef(new Animated.Value(bigger ? 14 : 5)).current
   const flag_right_width = useRef(new Animated.Value(bigger ? 8 : 3)).current
@@ -46,7 +46,7 @@ const Flag = ({bigger}) => {
             duration: 1000
           }),
           Animated.timing(flag_left_margin_left, {
-            toValue: 3,
+            toValue: 4,
             duration: 1000
           }),         
           Animated.timing(flag_left_color, {
@@ -77,7 +77,7 @@ const Flag = ({bigger}) => {
             duration: 1000
           }),
           Animated.timing(flag_left_margin_left, {
-            toValue: 2,
+            toValue: 3,
             duration: 1000
           }),  
           Animated.timing(flag_left_color, {
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: 14,
     width: 2,
-    marginLeft: 9,
+    marginLeft: 10,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5
   },
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: 2,
     width: 6,
-    marginLeft: 7,
+    marginLeft: 8,
     marginTop: 10,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: 2,
     width: 10,
-    marginLeft: 5,
+    marginLeft: 6,
     marginTop: 12,
     borderTopLeftRadius: 2,
     borderTopRightRadius: 2

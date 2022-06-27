@@ -77,21 +77,21 @@ const safeNeighborhood = (board, row, col) => {
 const openField = (board, row, col) => {
   console.log('open_field')
   const field = board[row][col]
+
   if(!field.opened) {
     field.opened = true
 
     if(field.mined) {
       field.blowned = true
-
-    } else if(safeNeighborhood(board, row, col)) {
-      getNeighbors(board, row, col)
-        .forEach(neighbor => {
-          openField(board, neighbor.row, neighbor.col)
+    } 
+    else if(safeNeighborhood(board, row, col)) {
+      getNeighbors(board, row, col).forEach(n => {
+          openField(board, n.row, n.col)
       })
-
-    } else {
+    } 
+    else {
       const neighbors = getNeighbors(board, row, col)
-      field.nearMines = neighbors.filter(neighbor => neighbor.mined).length
+      field.nearMines = neighbors.filter(n => n.mined).length
     }
   }
 }
@@ -103,7 +103,8 @@ const fieldBlowned = board => fields(board)
 
 const pending = field => (field.mined && !field.flagged) || (!field.mined && !field.opened)
 
-const wonGame = board => fields(board).filter(pending).length === 0
+const wonGame = board => fields(board)
+  .filter(pending).length === 0
 
 const showMines = board => fields(board).filter(field => field.mined) 
   .forEach(field => field.opened = true)
@@ -113,6 +114,9 @@ const invertFlag = (board, row, col) => {
   field.flagged = !field.flagged
 }
 
+const flagsUsed = board => fields(board) 
+  .filter(field => field.flagged).length
+
 export {
   createMinedBoard,
   cloneBoard,
@@ -121,4 +125,6 @@ export {
   wonGame,
   showMines,
   invertFlag,
+  flagsUsed
 } 
+
