@@ -6,7 +6,8 @@ export default function MineField({board, onOpenField}) {
   const rows = board.map((row, row_id) => {
     const cols = row.map((field, col_id) => {
       return <Field key={col_id} {...field}
-        onOpen={() => onOpenField(row_id, col_id)}
+        onOpen={() => onOpenField(board, row_id, col_id)}
+        onSelect={() => onSelectField(row, col)}
       />
     })
     return <View style={{ flexDirection: 'row' }} key={row_id}>{cols}</View>

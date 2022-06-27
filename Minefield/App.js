@@ -7,21 +7,25 @@ import Flag from './src/components/Flag';
 import MineField from './src/components/MineField'
 import { 
   createMinedBoard, cloneBoard, openField, 
-  fieldBlowned, wonGame, showMines } from './src/utils/mineField_logic';
+  fieldBlowned, wonGame, showMines, invertFlag } from './src/utils/mineField_logic';
 
 export default function App() {
 
   const [won_game, setWon] = useState(false)
   const [lost_game, setLost] = useState(false)
 
-  const [rows, setRows] = useState(params.getRowsAmount())
-  const [cols, setCols] = useState(params.getColumnsAmount())
+  const rows = params.getRowsAmount()
+  const cols = params.getColumnsAmount()
 
-  const [mines_amount, setMinesAmount] = useState(Math.ceil(cols * rows * params.difficultLevel))
-  const [board, setBoard] = useState(createMinedBoard(rows, cols, mines_amount))
+  const mines_amount = () => Math.ceil(cols * rows * params.difficultLevel)
+  const [board, setBoard] = useState()
 
-  const onOpenField = (row, col) => {
-    const board = cloneBoard(board)
+  useEffect(() => {
+    setBoard(createMinedBoard(rows, cols, mines_amount()))
+  }, [])
+
+  const onOpenField = (board_, row, col) => {
+    const board = cloneBoard(board_)
     openField(board, row, col)
     
     let lost = fieldBlowned(board)
@@ -39,6 +43,17 @@ export default function App() {
 
     setBoard(board)
   }
+
+  const onSelectField = (row, col) => {
+    const board = cloneBoard(board)
+    invertFlag(board, row, col)
+
+    const won = wonGame(board)
+    if (won) Alert.alert('You won the game! 😀')
+
+    setBoard(board)
+    setWon(won)
+  }
   
   return (
     <SafeAreaView style={styles.container}>
@@ -47,7 +62,7 @@ export default function App() {
         Grid size: {params.getRowsAmount()}x{params.getColumnsAmount()} 
       </Text> 
       <View style={styles.board}>
-        <MineField board={board} onOpenField={onOpenField}/>
+        {board && <MineField board={board} onOpenField={onOpenField}/>}
       </View>
     </SafeAreaView>
   );
