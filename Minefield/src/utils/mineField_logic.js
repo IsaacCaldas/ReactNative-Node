@@ -99,7 +99,7 @@ const pending = field => (field.mined && !field.flagged) || (!field.mined && !fi
 const wonGame = board => fields(board).filter(pending).length === 0
 
 const showMines = board => field(board).filter(field => field.mined) 
-  .map(field => field.opened = true)
+  .forEach(field => field.opened = true)
 
 export {
   createMinedBoard,

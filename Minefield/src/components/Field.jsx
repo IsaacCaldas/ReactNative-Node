@@ -1,10 +1,10 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native'
 import params from '../utils/params'
 
 import Mine from './Mine'
 import Flag from './Flag'
 
-const Field = (status) => {
+const Field = (status, onOpen) => {
   const { mined, opened, nearMines, blowned, flagged } = status
 
   const styleField = [styles.field]
@@ -36,15 +36,17 @@ const Field = (status) => {
   } 
 
   return (
-    <View style={styleField}>
-      {!mined && opened && nearMines > 0 &&  
-          <Text style={[styles.label, { color: color }]}>
-            {nearMines}
-          </Text>
-      }
-      { mined && opened && <Mine/>}
-      { flagged && !opened && <Flag/> }
-    </View>
+    <TouchableWithoutFeedback onPress={onOpen}>
+      <View style={styleField}>
+        {!mined && opened && nearMines > 0 &&  
+            <Text style={[styles.label, { color: color }]}>
+              {nearMines}
+            </Text>
+        }
+        { mined && opened && <Mine/>}
+        { flagged && !opened && <Flag/> }
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
