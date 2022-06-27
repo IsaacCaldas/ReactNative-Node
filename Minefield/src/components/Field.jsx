@@ -4,7 +4,7 @@ import params from '../utils/params'
 import Mine from './Mine'
 import Flag from './Flag'
 
-const Field = ({mined, opened, nearMines, blowned, flagged, onOpen, onSelect}) => {
+const Field = ({mined, opened, nearMines, blowned, flagged, onOpen, onSelect, stop_game}) => {
 
   const styleField = [styles.field]
   // others styles
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   opened: {
     borderWidth: 3.5,
-    backgroundColor: '#8691b5',
+    backgroundColor: '#6c7287',
     borderTopColor: '#4a5166',
     borderLeftColor: '#4a5166',
     borderBottomColor: '#6b738c',

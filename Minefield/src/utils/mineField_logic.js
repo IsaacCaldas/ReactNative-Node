@@ -1,5 +1,4 @@
 const createBoard = (rows, cols) => {
-  console.log('create_board')
   return Array(rows).fill(0).map((_, row) => {
     return Array(cols).fill(0).map((_, col) => {
       return {
@@ -16,7 +15,6 @@ const createBoard = (rows, cols) => {
 }
 
 const spreadMines = (board, mines_amount) => {
-  console.log('spread_mines')
   const rows = board.length
   const cols = board[0].length
   let mines_planted = 0
@@ -33,14 +31,12 @@ const spreadMines = (board, mines_amount) => {
 }
 
 const createMinedBoard = (rows, cols, mines_amount) => {
-  console.log('create_mined_board')
   const board = createBoard(rows, cols)
   spreadMines(board, mines_amount)
   return board
 }
 
 const cloneBoard = board => {
-  console.log('clone_board', board)
   return board.map(rows => {
     return rows.map(field => {
       return { ...field }
@@ -49,7 +45,6 @@ const cloneBoard = board => {
 }
 
 const getNeighbors = (board, row, col) => {
-  console.log('get_neighbors')
   const neighbors = []
   const rows = [row - 1, row, row + 1]
   const cols = [col - 1, col, col + 1]
@@ -69,14 +64,14 @@ const getNeighbors = (board, row, col) => {
 }
 
 const safeNeighborhood = (board, row, col) => {
-  console.log('safe_neighborhood')
   const safe = (result, neighbor) => result && !neighbor.mined
   return getNeighbors(board, row, col).reduce(safe, true)
 }
 
 const openField = (board, row, col) => {
-  console.log('open_field')
   const field = board[row][col]
+
+  if(field.flagged) return
 
   if(!field.opened) {
     field.opened = true

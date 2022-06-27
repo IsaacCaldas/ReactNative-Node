@@ -6,17 +6,20 @@ export default function Header({showModal, flagsLeft, onNewGame}){
 
   return (
     <View style={styles.container}>
+      <View  style={styles.titleArea}>
+        <Text style={styles.title}>
+          mine<Text style={styles.titleSub}>Field</Text>
+        </Text> 
+        <TouchableOpacity style={styles.newGameBtn} onPress={onNewGame}>
+          <Text style={styles.buttonLabel}>New Game</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.flagContainer}>
-        <TouchableOpacity onPress={showModal}
-          style={styles.flagButton}
-        >
-          <Flag bigger />
+        <TouchableOpacity style={styles.flagButton} onPress={showModal}>
+          <Flag bigger/>
         </TouchableOpacity>
         <Text style={styles.flagLeft}>{flagsLeft}</Text>
       </View>
-      <TouchableOpacity styles={styles.button} onPress={onNewGame}>
-        <Text styles={styles.buttonLabel}>New Game</Text>
-      </TouchableOpacity>
     </View>
   )
 }
@@ -24,12 +27,39 @@ export default function Header({showModal, flagsLeft, onNewGame}){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#333',
+    backgroundColor: '#111',
     alignItems: 'center',
     justifyContent: 'space-around',
     paddingTop: 20,
-    paddingHorizontal: 20
+    paddingHorizontal: 10
+  },
+  titleArea: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },  
+  title: {
+    fontSize: 38,
+    color: '#ebebeb',
+    fontWeight: 'bold',
+  },
+  titleSub: {
+    fontSize: 30,
+    color: "#f2480a"
+  },
+  newGameBtn: {
+    backgroundColor: '#f2480a',
+    padding: 5,
+    height: 30,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 20
+  },
+  buttonLabel: {
+    fontSize: 20,
+    color: '#ebebeb',
+    fontWeight: 'bold'
   },
   flagContainer: {
     flexDirection: 'row'
@@ -42,15 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     paddingTop: 5,
-    marginLeft: 20
-  },
-  button: {
-    backgroundColor: '#666',
-    padding: 5
-  },
-  buttonLabel: {
-    fontSize: 20,
-    color: '#ddd',
-    fontWeight: 'bold'
+    marginLeft: 10,
+    color: "#ebebeb"
   }
 })

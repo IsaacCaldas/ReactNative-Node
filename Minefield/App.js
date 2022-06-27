@@ -14,6 +14,7 @@ export default function App() {
   
   const [won_game, setWon] = useState(false)
   const [lost_game, setLost] = useState(false)
+  const [stop_game, setStop] = useState()
   const [visible, setVisible] = useState(false)
 
   const [rows, setRows] = useState(params.getRowsAmount())
@@ -21,21 +22,24 @@ export default function App() {
 
   const [mines_amount, setMinesAmount] = useState(Math.ceil(cols * rows * params.difficultLevel))
   const [board, setBoard] = useState()
-  
 
   useEffect(() => {
     setMinesAmount(mines_amount)
     setBoard(createMinedBoard(rows, cols, mines_amount))
   }, [])
+
+  useEffect(() => {
+    won_game || lost_game && setStop(true)
+  }, [won_game, lost_game])
   
   const newGame =() => {
     setRows(params.getRowsAmount())
-    setCols(params.getColsAmount())
+    setCols(params.getColumnsAmount())
     setMinesAmount(mines_amount)
     setBoard(createMinedBoard(rows, cols, mines_amount))
-    setNewGame(false)
     setWon(false)
     setLost(false)
+    setStop(null)
   }
 
   const onOpenField = (board_, row, col) => {
@@ -70,6 +74,8 @@ export default function App() {
 
   const levelSelected = level => {
     params.difficultLevel = level
+    setVisible(false)
+    newGame()
   }
   
   return (
@@ -85,11 +91,13 @@ export default function App() {
           showModal={() => setVisible(true)}
         />
       }
-      <Text style={styles.title}>mine<Text style={styles.titleSub}>Field</Text></Text> 
       <View style={styles.board}>
-        {board && <MineField board={board} 
-          onOpenField={onOpenField} 
-          onSelectField={onSelectField} />
+        {board && 
+          <MineField board={board} 
+            onOpenField={onOpenField} 
+            onSelectField={onSelectField}
+            stop_game={stop_game}
+          />
         }
       </View>
     </SafeAreaView>
@@ -101,16 +109,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0f0f0f',
     justifyContent: 'flex-end',
-  },
-  title: {
-    fontSize: 38,
-    color: '#ebebeb',
-    fontWeight: 'bold',
-    marginBottom: 10
-  },
-  titleSub: {
-    fontSize: 30,
-    color: "#f2480a"
   },
   gridSize: {
     fontSize: 20,
