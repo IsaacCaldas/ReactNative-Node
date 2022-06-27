@@ -51,7 +51,7 @@ const getNeighbors = (board, row, col) => {
 
   rows.forEach(r => {
     cols.forEach(c => {
-      const different = r !== row && c !== col
+      const different = r !== row || c !== col
       const valid_row = r >= 0 && r < board.length
       const valid_col = c >= 0 && c < board[0].length
 
@@ -64,8 +64,8 @@ const getNeighbors = (board, row, col) => {
 }
 
 const safeNeighborhood = (board, row, col) => {
-  const safe = (result, neighbor) => result && !neighbor.mined
-  return getNeighbors(board, row, col).reduce(safe, true)
+  const safes = (result, neighbor) => result && !neighbor.mined
+  return getNeighbors(board, row, col).reduce(safes, true)
 }
 
 const openField = (board, row, col) => {
@@ -80,9 +80,8 @@ const openField = (board, row, col) => {
       field.blowned = true
     } 
     else if(safeNeighborhood(board, row, col)) {
-      getNeighbors(board, row, col).forEach(n => {
-          openField(board, n.row, n.col)
-      })
+      getNeighbors(board, row, col)
+        .forEach(n => openField(board, n.row, n.col))
     } 
     else {
       const neighbors = getNeighbors(board, row, col)
