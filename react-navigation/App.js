@@ -1,23 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
+import Routes from './src/routes/app.routes'
 
-import Title from './src/components/Title'
+const App = () => <Routes/>
 
-export default function App() {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Title title='Hello World'/>
-    </SafeAreaView>
-  ); 
-}
+export default App
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#131313',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
  
