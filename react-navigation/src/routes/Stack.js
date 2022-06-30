@@ -1,8 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack'
 
-import Home from '../pages/Home'
-import About from '../pages/About'
-import Contact from '../pages/Contact'
+import Home from '../pages/Stack/Home'
+import About from '../pages/Stack/About'
+import Contact from '../pages/Stack/Contact'
 
 const Stack = createStackNavigator()
 

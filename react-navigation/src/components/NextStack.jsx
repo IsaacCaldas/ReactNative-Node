@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { StyleSheet, View, Button } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-export default function NextStack({back, next, push}) {
+export default function NextStack({back, next, push, home}) {
 
   const navigation = useNavigation()
 
-  const [bg_color, setBgColor] = useState()
-  const [txt_color, setTxtColor] = useState()
+  const [bg_color, setBgColor] = useState('#eee')
+  const [txt_color, setTxtColor] = useState('#111')
 
   useEffect(() => {
     colorPicker()
@@ -35,6 +35,10 @@ export default function NextStack({back, next, push}) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.subContent}>
+        { home && 
+          <Button title='Home' onPress={() => navigation.navigate('Home')}/> }
+      </View>
       <View style={styles.subContent}>
         { back && 
           <Button title='Back' onPress={() => navigation.goBack()}/> }
