@@ -1,6 +1,7 @@
 import { StyleSheet, SafeAreaView } from 'react-native'
 
 import Title from '../../components/Title'
+import NextStack from '../../components/NextStack'
 
 export default function About() {
   return (

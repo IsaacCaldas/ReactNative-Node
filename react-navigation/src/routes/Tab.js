@@ -12,8 +12,11 @@ export default function TabNav() {
       tabBarOptions={{
         activeTintColor: '#eee',
         inactiveTintColor: '#aaa',
+        activeBackgroundColor: '#111',
+        inactiveBackgroundColor: '#111',
         labelStyle: { fontSize: 16 }
       }}
+      screenOptions={{ headerShown: false }}
       initialRouteName="Home"
     >
       <Tab.Screen name='About' component={About}/>

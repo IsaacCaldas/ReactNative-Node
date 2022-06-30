@@ -3,6 +3,7 @@ import { StyleSheet, View, Button } from 'react-native'
 import 'react-native-gesture-handler';
 
 import Routes from './src/routes/app.routes'
+import Title from './src/components/Title'
 
 export default function App() {
   
@@ -13,11 +14,15 @@ export default function App() {
       { !nav_type && 
         <View style={styles.container}>
           <View style={styles.btnArea}>
+            <View style={styles.titleArea}><Title title='Choose your navigation'/></View>
             <View style={styles.btn}>
               <Button title='Stack Navigation' onPress={() => setNavType('stack')}/>
             </View>
             <View style={styles.btn}>
               <Button title='Tab Navigation' onPress={() => setNavType('tab')}/>
+            </View>
+            <View style={styles.btn}>
+              <Button title='Drawer Navigation' onPress={() => setNavType('drawer')}/>
             </View>
           </View>
         </View>
@@ -35,9 +40,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#111',
     flexDirection: 'row'
   },
+  titleArea: {
+    textAlign: 'center',
+    marginBottom: 20
+  },
   btnArea: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
     width: '100%'

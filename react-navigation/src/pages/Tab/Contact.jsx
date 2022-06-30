@@ -2,11 +2,10 @@ import { StyleSheet, SafeAreaView } from 'react-native'
 import 'react-native-gesture-handler'
 
 import Title from '../../components/Title'
-import NextStack from '../../components/NextStack'
 
 export default function Contact() {
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: bg_color }]}>
+    <SafeAreaView style={styles.container}>
       <Title title='Contact' color='#eee'/>
     </SafeAreaView>
   )
@@ -18,6 +17,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#afaf3b'
   },
 })
  
