@@ -1,10 +1,10 @@
 import { StyleSheet, View, Text } from 'react-native'
 import 'react-native-gesture-handler';
 
-export default function App({title}) {
+export default function App({title, color}) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}!</Text>
+      <Text style={[styles.title, {color: color || '#eee'}]}>{title}!</Text>
     </View>
   ); 
 }
@@ -16,8 +16,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 40,
-    color: '#eee'
+    fontSize: 40
   }
 });
  
