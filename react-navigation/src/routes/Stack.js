@@ -8,9 +8,20 @@ const Stack = createStackNavigator()
 
 export default function StackNav() {
   return (
-    <Stack.Navigator initialRouteName='Home'>
-      <Stack.Screen name='Home' component={Home}/>
-      <Stack.Screen name='About' component={About}/>
+    <Stack.Navigator initialRouteName='Home'
+      // screenOptions={{
+      //   headerShown: false
+      // }}
+    >
+      <Stack.Screen name='Home' component={Home}
+        options={{
+          headerShown: false
+        }}/>
+      <Stack.Screen name='About' component={About}
+        options={{
+          title: 'Meet us'
+        }}
+      />
       <Stack.Screen name='Contact' component={Contact}/>
     </Stack.Navigator>
   )
