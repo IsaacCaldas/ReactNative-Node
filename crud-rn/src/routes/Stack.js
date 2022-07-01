@@ -42,7 +42,10 @@ export default function StackNav() {
 }
 
 const screenOptions = {
-  headerStyle: { backgroundColor: '#4a4' },
+  headerStyle: { 
+    backgroundColor: '#4a4',
+    elevation: 0
+  },
   headerTintColor: '#efe',
   headerTitleStyle: { 
     fontSize: 25,
