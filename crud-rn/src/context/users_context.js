@@ -1,16 +1,29 @@
 import { createContext, useReducer } from 'react'
 import users from '../data/users'
 
-import { DELETE_USER } from '../utils/constants'
-
 const initialState = { users }
 const UsersContext = createContext({})
 
 const actions = {
+  CREATE_USER(state, action) {
+    const user = action.payload 
+    user.id = users[users.length - 1].id + 1
+    return {
+      ...state,
+      users: [...state.users, user]
+    }
+  },
+  UPDATE_USER(state, action) {
+    const user = action.payload 
+    return {
+      ...state,
+      users: state.users.map(u => u.id === user.id ? user : u)
+    }
+  },
   DELETE_USER(state, action) {
     const user = action.payload
     return { 
-      // ...state, IF HAVE OTHERS ELEMENTS IN STATE, YOU NEED USE SPREAD
+      ...state,
       users: state.users.filter(user_ => user_.id !== user.id)
     }
   }

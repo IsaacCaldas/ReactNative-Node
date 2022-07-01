@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import { StyleSheet, SafeAreaView, View, Image, 
   Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 
+import UsersContext from '../context/users_context'
+import { CREATE_USER, UPDATE_USER } from '../utils/constants'
+
 export default function UserForm({ route, navigation }) {
   const item = route.params?.item
   const img_default = 'https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397_960_720.png'
@@ -12,6 +15,8 @@ export default function UserForm({ route, navigation }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [imgLink, setImgLink] = useState(img_default)
+
+  const { dispatch } = useContext(UsersContext)
 
   useEffect(() => {
     item && setName(item.name)
@@ -26,11 +31,19 @@ export default function UserForm({ route, navigation }) {
   function handleSave() {
     setLoad(!load)
     
-    setTimeout(() => {
-      alert(`${item ? item.name : 'User'} has been ${item ? 'updated' : 'saved'}`)
-      navigation.goBack()
-      setLoad(load)
-    }, 3000);
+    let new_user = {
+      name,
+      email,
+      img
+    }
+    dispatch({
+      type: item.id ? UPDATE_USER : CREATE_USER,
+      payload: new_user
+    })
+    alert(`${item ? item.name : 'User'} has been ${item ? 'updated' : 'saved'}`)
+
+    setLoad(load)
+    navigation.goBack()
   }
 
   return (
@@ -54,6 +67,14 @@ export default function UserForm({ route, navigation }) {
           placeholder={'Enter a email'}
           placeholderTextColor="#eee"
           onChangeText={(text) => setEmail(text)}
+          editable={!load}
+        />
+        <TextInput
+          style={styles.input}
+          value={imgLink}
+          placeholder={'Enter a URL image to user'}
+          placeholderTextColor="#eee"
+          onChangeText={(text) => setImgLink(text)}
           editable={!load}
         />
         <TouchableOpacity 
