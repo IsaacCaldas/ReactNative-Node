@@ -1,9 +1,9 @@
 import { StyleSheet, SafeAreaView, View, Text } from 'react-native'
 
-export default function Home() {
+export default function UserForm() {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Home</Text>
+      <Text style={styles.title}>UserForm</Text>
     </SafeAreaView>
   )
 }
