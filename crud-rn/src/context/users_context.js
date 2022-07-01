@@ -6,14 +6,21 @@ import { DELETE_USER } from '../utils/constants'
 const initialState = { users }
 const UsersContext = createContext({})
 
+const actions = {
+  DELETE_USER(state, action) {
+    const user = action.payload
+    return { 
+      // ...state, IF HAVE OTHERS ELEMENTS IN STATE, YOU NEED USE SPREAD
+      users: state.users.filter(user_ => user_.id !== user.id)
+    }
+  }
+}
+
 export const UsersProvider = props => {
 
   function reducer(state, action) {
-    console.log(action)
-    switch (action.type) {
-      case DELETE_USER:
-        return state
-    }
+    const fn = actions[action.type]
+    return fn ? fn(state, action) : state
   }  
 
   const [state, dispatch] = useReducer(reducer, initialState)
