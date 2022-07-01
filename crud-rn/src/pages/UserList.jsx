@@ -1,11 +1,14 @@
+import { useState, useContext } from 'react'
 import { StyleSheet, SafeAreaView, View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
-import users from '../data/users'
+import UsersContext from '../context/users_context'
 
 export default function UserList({navigation}) {
+
+  const state = useContext(UsersContext)
 
   const rightSwipeActions = () => {
     return (
@@ -51,7 +54,7 @@ export default function UserList({navigation}) {
     <SafeAreaView style={styles.container}>
       <FlatList 
         keyExtractor={user => user.id.toString()}
-        data={users}
+        data={state.users}
         renderItem={userRow}
       />
     </SafeAreaView>
