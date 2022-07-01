@@ -4,11 +4,13 @@ import { StyleSheet, SafeAreaView, View, Text, FlatList, Image, TouchableOpacity
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
+import { DELETE_USER } from '../utils/constants'
+
 import UsersContext from '../context/users_context'
 
 export default function UserList({navigation}) {
 
-  const state = useContext(UsersContext)
+  const { state, dispatch } = useContext(UsersContext)
 
   const rightSwipeActions = () => {
     return (
@@ -22,8 +24,11 @@ export default function UserList({navigation}) {
     )
   }
   
-  const deleteUser = async (item) => {
-    console.log(`${item.name} has been removed`)
+  const deleteUser = (user) => {
+    dispatch({
+      type: DELETE_USER,
+      payload: user
+    })
   }
 
   function userRow({item}) {
