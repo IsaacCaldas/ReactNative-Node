@@ -19,7 +19,7 @@ export default function UserList({navigation}) {
     )
   }
   
-  const swipeFromRightOpen = async (item) => {
+  const deleteUser = async (item) => {
     console.log(`${item.name} has been removed`)
   }
 
@@ -28,7 +28,7 @@ export default function UserList({navigation}) {
     return (
       <Swipeable
       renderRightActions={rightSwipeActions}
-      onSwipeableRightOpen={() => swipeFromRightOpen(item)}
+      onSwipeableRightOpen={() => deleteUser(item)}
       >
         <TouchableOpacity 
           onPress={() => navigation.navigate('UserForm', { item })}

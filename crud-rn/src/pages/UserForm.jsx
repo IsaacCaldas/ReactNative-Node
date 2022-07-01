@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { StyleSheet, SafeAreaView, View, Image, 
   Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 
-export default function UserForm({ route }) {
+export default function UserForm({ route, navigation }) {
   const item = route.params?.item
   const img_default = 'https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397_960_720.png'
 
@@ -22,6 +22,16 @@ export default function UserForm({ route }) {
   useEffect(() => {
     name && email ? setFilled(true) : setFilled(false)
   }, [name, email])
+
+  function handleSave() {
+    setLoad(!load)
+    
+    setTimeout(() => {
+      alert(`${item ? item.name : 'User'} has been ${item ? 'updated' : 'saved'}`)
+      navigation.goBack()
+      setLoad(load)
+    }, 3000);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,7 +58,7 @@ export default function UserForm({ route }) {
         />
         <TouchableOpacity 
           style={[styles.button, { backgroundColor: filled ? '#4a4' : '#4a47' }]}
-          onPress={() => setLoad(!load)}
+          onPress={() => handleSave()}
           disabled={!filled}
         >
           { load ?
