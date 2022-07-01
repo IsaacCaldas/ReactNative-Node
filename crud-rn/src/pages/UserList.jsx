@@ -1,25 +1,49 @@
 import { StyleSheet, SafeAreaView, View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 
+import Swipeable from 'react-native-gesture-handler/Swipeable'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+
 import users from '../data/users'
 
 export default function UserList({navigation}) {
 
+  const rightSwipeActions = () => {
+    return (
+      <View style={styles.rightSwipe}>
+        <FontAwesome
+          name="trash"
+          size={20}
+          color="#fff"
+        />
+      </View>
+    )
+  }
+  
+  const swipeFromRightOpen = async (item) => {
+    console.log(`${item.name} has been removed`)
+  }
+
   function userRow({item}) {
     const { id, name, email, img } = item 
     return (
-      <TouchableOpacity 
-        onPress={() => navigation.navigate('UserForm', { item })}
+      <Swipeable
+      renderRightActions={rightSwipeActions}
+      onSwipeableRightOpen={() => swipeFromRightOpen(item)}
       >
-        <View style={styles.row} key={id}>
-          <Image
-            style={styles.userImage}
-            source={{uri: img}}
-          />
-          <Text style={styles.textName}>
-            {name} | <Text style={styles.textEmail}>{email}</Text>
-          </Text>
-        </View>
-      </TouchableOpacity>
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('UserForm', { item })}
+        >
+          <View style={styles.row} key={id}>
+            <Image
+              style={styles.userImage}
+              source={{uri: img}}
+            />
+            <Text style={styles.textName}>
+              {name} | <Text style={styles.textEmail}>{email}</Text>
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </Swipeable>
     )
   }
 
@@ -64,5 +88,12 @@ const styles = StyleSheet.create({
   textEmail: {
     color: '#4a4',
     fontWeight: 'bold'
+  },
+  rightSwipe: {
+    flex: 1,
+    backgroundColor: '#c33333',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingRight: 15
   }
 })
